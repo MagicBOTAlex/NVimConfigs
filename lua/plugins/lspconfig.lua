@@ -1,22 +1,69 @@
 return {
+  -- 1. Ensure Treesitter has the Svelte parser
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      -- add "svelte" to the list of languages to install
+      ensure_installed = {
+        "bash",
+        "c",
+        "cpp",
+        "javascript",
+        "typescript",
+        "html",
+        "css",
+        "svelte", -- ← here
+        -- … any others you already have
+      },
+      highlight = {
+        enable = true,
+        -- You can disable slow parsers here, but svelte is usually fine
+      },
+      indent = {
+        enable = true,
+      },
+      -- if you use autotag:
+      autotag = {
+        enable = true,
+      },
+    },
+  },
+
+  -- 2. Configure nvim-lspconfig to start the Svelte Language Server
   {
     "neovim/nvim-lspconfig",
     -- merge into LazyVim’s default LSP opts
     opts = {
       servers = {
+        -- your existing tailwindcss setup
         tailwindcss = {
-          -- tell the Tailwind LSP how to find classes in Svelte files
           settings = {
             tailwindCSS = {
               experimental = {
                 classRegex = {
-                  -- matches `class="..."`, `class:active="..."`, etc.
                   { [[class[:]?%s*[:=]?%s*["'`]([^"'`}]*)["'`}]], 1 },
                 },
               },
             },
           },
         },
+        -- add Svelte here
+        svelte = {
+          -- you can pass any server-specific settings here;
+          -- empty table is fine if you just want defaults
+        },
+      },
+      -- some LazyVim setups need a `setup` override so the server actually spawns:
+      setup = {
+        -- this tells LazyVim “I handled Svelte setup; don’t do the default”
+        svelte = function(_, opts)
+          -- make sure the plugin is installed:
+          -- `npm install -g svelte-language-server` or via your package manager
+          require("lspconfig").svelte.setup(opts)
+          -- if you want `.svelte` to use TS inference:
+          vim.g.vim_svelte_plugin_use_typescript = 1
+          return true
+        end,
       },
     },
   },
