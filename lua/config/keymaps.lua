@@ -38,6 +38,3 @@ vim.keymap.set("n", "<leader>E", function()
 
   vim.fn.jobstart(cmd, { detach = true })
 end, { desc = "Open file location in system file explorer" })
-
--- Default theme
-vim.cmd([[colorscheme vscode]])
