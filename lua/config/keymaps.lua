@@ -55,3 +55,10 @@ vim.keymap.set("n", "<leader>E", function()
 
   vim.fn.jobstart(cmd, { detach = true })
 end, { desc = "Open file location in system file explorer" })
+
+-- Bring back Ctrl + key in insertmode
+
+vim.keymap.set("i", "<C-Left>", "<C-\\><C-O>b", { desc = "Move to previous word in insert mode" })
+vim.keymap.set("i", "<C-Right>", "<C-\\><C-O>w", { desc = "Move to next word in insert mode" })
+vim.keymap.set("i", "<C-Del>", "<C-\\><C-O>dw", { desc = "Delete next word in insert mode" })
+vim.keymap.set("i", "<C-h>", "<C-w>", { desc = "Delete previous word" })
