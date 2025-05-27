@@ -5,6 +5,20 @@ local opts = { noremap = true, silent = true }
 map("n", "<M-Left>", "<C-o>", opts) -- Alt + Left = Jump back
 map("n", "<M-Right>", "<C-i>", opts) -- Alt + Right = Jump forward
 
+-- Make not copy by default
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+
+-- Normal-mode
+map("n", "d", '"_d', opts)
+map("n", "c", '"_c', opts)
+map("n", "x", '"_x', opts)
+
+-- Visual-mode
+map("v", "d", '"_d', opts)
+map("v", "c", '"_c', opts)
+map("v", "x", '"_x', opts)
+
 -- Change buffers from 0-9 to 1-9 i think
 local function goto_buffer(index)
   local buffers = vim.fn.getbufinfo({ buflisted = 1 })

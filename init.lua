@@ -20,6 +20,10 @@ vim.api.nvim_create_autocmd("FileType", {
       fg = "#4ec9b0",
       ctermfg = 214,
     })
+    vim.api.nvim_set_hl(0, "@none", {
+      fg = "#d4d4d4",
+      ctermfg = 214,
+    })
   end,
 })
 
