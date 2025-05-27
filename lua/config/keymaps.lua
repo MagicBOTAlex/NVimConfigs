@@ -9,6 +9,9 @@ map("n", "<M-Right>", "<C-i>", opts) -- Alt + Right = Jump forward
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
+-- Hide the mouse pointer while typing; it will reappear on the next mouse move
+vim.opt.mousehide = true
+
 -- Normal-mode
 map("n", "d", '"_d', opts)
 map("n", "c", '"_c', opts)
