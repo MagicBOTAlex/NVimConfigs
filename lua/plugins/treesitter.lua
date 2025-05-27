@@ -18,6 +18,7 @@ return {
         "css",
         "scss",
         "svelte",
+        "latex",
       },
       highlight = {
         enable = true,
