@@ -65,3 +65,6 @@ vim.keymap.set("i", "<C-h>", "<C-w>", { desc = "Delete previous word" })
 
 -- Place cursor at selection end after yank
 vim.keymap.set("v", "y", "y`>", { noremap = true, silent = true })
+
+-- Make ctrl + backslash exit terminal mode
+vim.keymap.set("t", "<C-\\>", [[<C-\><C-n>]], { noremap = true, silent = true })
