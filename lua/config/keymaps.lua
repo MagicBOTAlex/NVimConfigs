@@ -62,3 +62,6 @@ vim.keymap.set("i", "<C-Left>", "<C-\\><C-O>b", { desc = "Move to previous word 
 vim.keymap.set("i", "<C-Right>", "<C-\\><C-O>w", { desc = "Move to next word in insert mode" })
 vim.keymap.set("i", "<C-Del>", "<C-\\><C-O>dw", { desc = "Delete next word in insert mode" })
 vim.keymap.set("i", "<C-h>", "<C-w>", { desc = "Delete previous word" })
+
+-- Place cursor at selection end after yank
+vim.keymap.set("v", "y", "y`>", { noremap = true, silent = true })
