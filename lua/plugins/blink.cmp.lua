@@ -18,6 +18,21 @@ return {
     -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
     -- See the full "keymap" documentation for information on defining your own keymap.
     keymap = { preset = "super-tab", ["<Esc>"] = { "cancel", "fallback" } },
+    sorts = {
+      -- 1) Promote Svelte above everyone
+      function(a, b)
+        if a.client_name and b.client_name then
+          if a.client_name == "svelte" and b.client_name ~= "svelte" then
+            return true
+          end
+          if b.client_name == "svelte" and a.client_name ~= "svelte" then
+            return false
+          end
+        end
+      end,
+      "score",
+      "sort_text",
+    },
 
     appearance = {
       -- Sets the fallback highlight groups to nvim-cmp's highlight groups
