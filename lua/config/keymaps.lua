@@ -79,3 +79,8 @@ vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", vim.tbl_extend("force", opts, 
 
 -- Ctrl + s in insert mode to save
 vim.keymap.set("i", "<C-s>", "<C-o>:w<CR>", { silent = true })
+
+-- Remap PageDown to half-page down
+vim.keymap.set({ "n", "v" }, "<PageDown>", "<C-d>", { silent = true, desc = "Half-page down" })
+-- Remap PageUp   to half-page up
+vim.keymap.set({ "n", "v" }, "<PageUp>", "<C-u>", { silent = true, desc = "Half-page up" })
