@@ -68,3 +68,14 @@ vim.keymap.set("v", "y", "y`>", { noremap = true, silent = true })
 
 -- Make ctrl + backslash exit terminal mode
 vim.keymap.set("t", "<C-\\>", [[<C-\><C-n>]], { noremap = true, silent = true })
+
+
+local opts = { noremap = true, silent = true }
+
+-- Normal-mode: Alt+Down / Alt+Up
+vim.keymap.set("n", "<A-Down>", "<cmd>m .+1<CR>==", vim.tbl_extend("force", opts, { desc = "Move line down" }))
+vim.keymap.set("n", "<A-Up>",   "<cmd>m .-2<CR>==", vim.tbl_extend("force", opts, { desc = "Move line up"   }))
+
+-- Visual-mode block moves
+vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", vim.tbl_extend("force", opts, { desc = "Move block down" }))
+vim.keymap.set("v", "<A-Up>",   ":m '<-2<CR>gv=gv", vim.tbl_extend("force", opts, { desc = "Move block up"   }))
