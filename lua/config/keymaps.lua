@@ -15,12 +15,10 @@ vim.opt.mousehide = true
 -- Normal-mode
 map("n", "d", '"_d', opts)
 map("n", "c", '"_c', opts)
-map("n", "x", '"_x', opts)
 
 -- Visual-mode
 map("v", "d", '"_d', opts)
 map("v", "c", '"_c', opts)
-map("v", "x", '"_x', opts)
 
 -- Change buffers from 0-9 to 1-9 i think
 local function goto_buffer(index)
