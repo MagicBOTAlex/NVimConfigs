@@ -27,6 +27,22 @@ return {
           ["custom.component"] = "TSCustomComponent",
         },
       },
+      textobjects = {
+        select = {
+          enable = true,
+          -- Automatically jump forward to textobj, no need to press "enter"
+          lookahead = true,
+          keymaps = {
+            -- these two lines set up:
+            -- "af" = around-function, "if" = inner-function
+            ["af"] = "@function.outer",
+            ["if"] = "@function.inner",
+            -- You can also add other mappings if you want (methods, classes, etc.)
+            -- ["ac"] = "@class.outer",
+            -- ["ic"] = "@class.inner",
+          },
+        },
+      },
       playground = { enable = true },
     })
 
