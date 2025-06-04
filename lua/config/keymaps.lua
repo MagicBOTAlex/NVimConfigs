@@ -84,3 +84,5 @@ vim.keymap.set("i", "<C-s>", "<C-o>:w<CR>", { silent = true })
 vim.keymap.set({ "n", "v" }, "<PageDown>", "<C-d>", { silent = true, desc = "Half-page down" })
 -- Remap PageUp   to half-page up
 vim.keymap.set({ "n", "v" }, "<PageUp>", "<C-u>", { silent = true, desc = "Half-page up" })
+
+vim.keymap.set("v", "<leader>C", [["+y]], { desc = "Copy to remote X clipboard" })
