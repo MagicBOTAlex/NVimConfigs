@@ -23,6 +23,7 @@ return {
           -- "html-lsp",
           "json-lsp",
           "lua-language-server",
+          "pylsp",
           -- "nextls",
           "svelte-language-server",
           "prettier",
