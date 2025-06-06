@@ -10,6 +10,7 @@ return {
         -- we only care about the explorer source here
         sources = {
           explorer = {
+            auto_close = true,
             layout = {
               preset = "sidebar",
               preview = false,
