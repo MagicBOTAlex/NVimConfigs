@@ -77,6 +77,9 @@ vim.keymap.set("n", "<A-Up>", "<cmd>m .-2<CR>==", vim.tbl_extend("force", opts, 
 vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", vim.tbl_extend("force", opts, { desc = "Move block down" }))
 vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", vim.tbl_extend("force", opts, { desc = "Move block up" }))
 
+-- Alt + d to duplicate current line
+vim.keymap.set("n", "<M-d>", "yyp", { noremap = true, silent = true })
+
 -- Ctrl + s in insert mode to save
 vim.keymap.set("i", "<C-s>", "<C-o>:w<CR>", { silent = true })
 
@@ -111,3 +114,17 @@ vim.keymap.set(
   ":!git -C " .. vim.fn.expand("$HOME") .. "/.config/nvim pull<CR><CR>",
   { silent = true, desc = "Git pull (nvim config)" }
 )
+
+
+vim.keymap.set({ 'n', 'x' }, 's', function()
+  require("flash").jump()
+end, { desc = "Flash" })
+
+vim.keymap.set('o', 's', function()
+  if vim.v.operator == 'd' then
+    return 's' -- literal 's', passed through
+  end
+  require("flash").jump()
+  return ''  -- consume the key
+end, { expr = true, desc = "Flash (op)", replace_keycodes = false })
+
