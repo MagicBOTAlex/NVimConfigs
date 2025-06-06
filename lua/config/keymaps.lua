@@ -84,3 +84,30 @@ vim.keymap.set("i", "<C-s>", "<C-o>:w<CR>", { silent = true })
 vim.keymap.set({ "n", "v" }, "<PageDown>", "<C-d>", { silent = true, desc = "Half-page down" })
 -- Remap PageUp   to half-page up
 vim.keymap.set({ "n", "v" }, "<PageUp>", "<C-u>", { silent = true, desc = "Half-page up" })
+
+
+-- ──────────────────────────────────────────────────────────────
+-- 1) Git pull in the current working directory
+-- ──────────────────────────────────────────────────────────────
+-- Pressing <leader> g p will run "git pull" in whatever
+-- directory Neovim was opened from (or has as its current dir).
+
+vim.keymap.set(
+  "n",                                 -- mode: normal
+  "<leader>gp",                        -- key sequence
+  ":!git pull<CR><CR>",                -- command to run
+  { silent = true, desc = "Git pull (cwd)" }
+)
+
+
+-- ──────────────────────────────────────────────────────────────
+-- 2) Git pull in your Neovim config directory
+-- ──────────────────────────────────────────────────────────────
+-- Pressing <leader> g c will run "git pull" inside ~/.config/nvim.
+
+vim.keymap.set(
+  "n",                                 -- mode: normal
+  "<leader>gc",                        -- key sequence
+  ":!git -C " .. vim.fn.expand("$HOME") .. "/.config/nvim pull<CR><CR>",
+  { silent = true, desc = "Git pull (nvim config)" }
+)
