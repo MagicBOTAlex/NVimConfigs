@@ -146,3 +146,9 @@ for _, key in ipairs({ "o", "O" }) do
     smart_open(key)
   end, { noremap = true, silent = true })
 end
+
+-- make Ctrl-w + Ctrl-Arrow act like Ctrl-w + Arrow
+map("n", "<C-w><C-Left>", "<C-w><Left>", { desc = "Move to left window" })
+map("n", "<C-w><C-Right>", "<C-w><Right>", { desc = "Move to right window" })
+map("n", "<C-w><C-Up>", "<C-w><Up>", { desc = "Move to upper window" })
+map("n", "<C-w><C-Down>", "<C-w><Down>", { desc = "Move to lower window" })
