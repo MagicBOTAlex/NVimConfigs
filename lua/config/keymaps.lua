@@ -88,7 +88,6 @@ vim.keymap.set({ "n", "v" }, "<PageDown>", "<C-d>", { silent = true, desc = "Hal
 -- Remap PageUp   to half-page up
 vim.keymap.set({ "n", "v" }, "<PageUp>", "<C-u>", { silent = true, desc = "Half-page up" })
 
-
 -- ──────────────────────────────────────────────────────────────
 -- 1) Git pull in the current working directory
 -- ──────────────────────────────────────────────────────────────
@@ -96,12 +95,11 @@ vim.keymap.set({ "n", "v" }, "<PageUp>", "<C-u>", { silent = true, desc = "Half-
 -- directory Neovim was opened from (or has as its current dir).
 
 vim.keymap.set(
-  "n",                                 -- mode: normal
-  "<leader>gp",                        -- key sequence
-  ":!git pull<CR><CR>",                -- command to run
+  "n", -- mode: normal
+  "<leader>gp", -- key sequence
+  ":!git pull<CR><CR>", -- command to run
   { silent = true, desc = "Git pull (cwd)" }
 )
-
 
 -- ──────────────────────────────────────────────────────────────
 -- 2) Git pull in your Neovim config directory
@@ -109,23 +107,22 @@ vim.keymap.set(
 -- Pressing <leader> g c will run "git pull" inside ~/.config/nvim.
 
 vim.keymap.set(
-  "n",                                 -- mode: normal
-  "<leader>gc",                        -- key sequence
+  "n", -- mode: normal
+  "<leader>gc", -- key sequence
   ":!git -C " .. vim.fn.expand("$HOME") .. "/.config/nvim pull<CR><CR>",
   { silent = true, desc = "Git pull (nvim config)" }
 )
 
-
-vim.keymap.set({ 'n', 'x' }, 's', function()
+vim.keymap.set({ "n", "x" }, "s", function()
   require("flash").jump()
 end, { desc = "Flash" })
 
-vim.keymap.set('o', 's', function()
-  if vim.v.operator == 'd' then
-    return 's' -- literal 's', passed through
+vim.keymap.set("o", "s", function()
+  if vim.v.operator == "d" then
+    return "s" -- literal 's', passed through
   end
   require("flash").jump()
-  return ''  -- consume the key
+  return "" -- consume the key
 end, { expr = true, desc = "Flash (op)", replace_keycodes = false })
 
 -- double-v ⇒ visual block
@@ -135,3 +132,31 @@ vim.keymap.set(
   '<C-v>',
   { noremap = true, silent = true, desc = 'Enter Visual-Block mode' }
 )
+
+-- Allows 2o for insert 2 lines below and enter insert mode
+local feedkeys = vim.api.nvim_feedkeys
+local t = vim.api.nvim_replace_termcodes
+
+-- helper: open N lines with {key} (either "o" or "O")
+local function smart_open(key)
+  local cnt = vim.v.count1
+  -- for each extra count, open one line and immediately go back to normal
+  for _ = 2, cnt do
+    feedkeys(t(key .. "<Esc>", true, false, true), "n", false)
+  end
+  -- final open: drops you into insert mode
+  feedkeys(t(key, true, false, true), "n", false)
+end
+
+-- map both 'o' (below) and 'O' (above)
+for _, key in ipairs({ "o", "O" }) do
+  vim.keymap.set("n", key, function()
+    smart_open(key)
+  end, { noremap = true, silent = true })
+end
+
+-- make Ctrl-w + Ctrl-Arrow act like Ctrl-w + Arrow
+map("n", "<C-w><C-Left>", "<C-w><Left>", { desc = "Move to left window" })
+map("n", "<C-w><C-Right>", "<C-w><Right>", { desc = "Move to right window" })
+map("n", "<C-w><C-Up>", "<C-w><Up>", { desc = "Move to upper window" })
+map("n", "<C-w><C-Down>", "<C-w><Down>", { desc = "Move to lower window" })
