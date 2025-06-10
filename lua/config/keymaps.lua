@@ -128,3 +128,10 @@ vim.keymap.set('o', 's', function()
   return ''  -- consume the key
 end, { expr = true, desc = "Flash (op)", replace_keycodes = false })
 
+-- double-v ⇒ visual block
+vim.keymap.set(
+  'n',
+  'vv',
+  '<C-v>',
+  { noremap = true, silent = true, desc = 'Enter Visual-Block mode' }
+)
