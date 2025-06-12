@@ -13,7 +13,9 @@ local function is_ssh_session()
     local handle = io.popen(string.format("ps -p %d -o comm=,ppid=", pid))
     local info = handle:read("*l")
     handle:close()
-    if not info then break end
+    if not info then
+      break
+    end
 
     local name, ppid = info:match("^(%S+)%s+(%d+)")
     if name == "sshd" then
@@ -42,4 +44,3 @@ vim.g.clipboard = {
     ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
   },
 }
-
