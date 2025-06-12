@@ -79,6 +79,7 @@ vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", vim.tbl_extend("force", opts, 
 
 -- Alt + d to duplicate current line
 vim.keymap.set("n", "<M-d>", "yyp", { noremap = true, silent = true })
+vim.keymap.set("v", "<M-d>", "yp", { noremap = true, silent = true })
 
 -- Ctrl + s in insert mode to save
 vim.keymap.set("i", "<C-s>", "<C-o>:w<CR>", { silent = true })

@@ -22,7 +22,7 @@ vim.g.clipboard = {
     ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
   },
   paste = {
-    ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
-    ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+    ["+"] = function() end,
+    ["*"] = function() end,
   },
 }
