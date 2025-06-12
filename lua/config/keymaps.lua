@@ -125,6 +125,14 @@ vim.keymap.set("o", "s", function()
   return "" -- consume the key
 end, { expr = true, desc = "Flash (op)", replace_keycodes = false })
 
+-- double-v ⇒ visual block
+vim.keymap.set(
+  'n',
+  'vv',
+  '<C-v>',
+  { noremap = true, silent = true, desc = 'Enter Visual-Block mode' }
+)
+
 -- Allows 2o for insert 2 lines below and enter insert mode
 local feedkeys = vim.api.nvim_feedkeys
 local t = vim.api.nvim_replace_termcodes
@@ -146,3 +154,9 @@ for _, key in ipairs({ "o", "O" }) do
     smart_open(key)
   end, { noremap = true, silent = true })
 end
+
+-- make Ctrl-w + Ctrl-Arrow act like Ctrl-w + Arrow
+map("n", "<C-w><C-Left>", "<C-w><Left>", { desc = "Move to left window" })
+map("n", "<C-w><C-Right>", "<C-w><Right>", { desc = "Move to right window" })
+map("n", "<C-w><C-Up>", "<C-w><Up>", { desc = "Move to upper window" })
+map("n", "<C-w><C-Down>", "<C-w><Down>", { desc = "Move to lower window" })
