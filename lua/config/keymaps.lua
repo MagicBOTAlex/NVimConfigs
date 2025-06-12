@@ -106,10 +106,11 @@ vim.keymap.set(
 -- ──────────────────────────────────────────────────────────────
 -- Pressing <leader> g c will run "git pull" inside ~/.config/nvim.
 
+local cfg = vim.fn.stdpath("config")
 vim.keymap.set(
-  "n", -- mode: normal
-  "<leader>gc", -- key sequence
-  ":!git -C " .. vim.fn.expand("$HOME") .. "/.config/nvim pull<CR><CR>",
+  "n",
+  "<leader>gc",
+  string.format(":!git -C %s pull<CR><CR>", cfg),
   { silent = true, desc = "Git pull (nvim config)" }
 )
 
@@ -126,12 +127,7 @@ vim.keymap.set("o", "s", function()
 end, { expr = true, desc = "Flash (op)", replace_keycodes = false })
 
 -- double-v ⇒ visual block
-vim.keymap.set(
-  'n',
-  'vv',
-  '<C-v>',
-  { noremap = true, silent = true, desc = 'Enter Visual-Block mode' }
-)
+vim.keymap.set("n", "vv", "<C-v>", { noremap = true, silent = true, desc = "Enter Visual-Block mode" })
 
 -- Allows 2o for insert 2 lines below and enter insert mode
 local feedkeys = vim.api.nvim_feedkeys
