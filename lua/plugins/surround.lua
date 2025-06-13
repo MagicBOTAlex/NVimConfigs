@@ -10,6 +10,13 @@ return {
         delete = "ds", -- delete surroundings
         change = "cs", -- change surroundings
       },
+      surrounds = {
+        ["{"] = {
+          add = function()
+            return { "{", "}" }
+          end,
+        },
+      },
     })
   end,
 }
