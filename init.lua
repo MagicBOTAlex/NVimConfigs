@@ -58,10 +58,3 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Allow :w!! to save with sudo when you forgot to start nvim as root
-vim.keymap.set(
-  'c',                -- command-line mode
-  'w!!',              -- when you type ":w!!"
-  'w !sudo tee > /dev/null %',  -- run this instead
-  { noremap = true, desc = "Save file with sudo privileges" }
-)
