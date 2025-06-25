@@ -19,15 +19,15 @@ if not is_mint() then
   return
 end
 
--- helper to keep things brief
-local map = vim.keymap.set
-local opts = { noremap = true, silent = true }
+local map   = vim.keymap.set
+local opts  = { noremap = true, silent = true }
 
--- in insert mode, Ctrl+Alt+7 => {
-map('i', '<C-M-7>', '{', opts)
--- Ctrl+Alt+8 => [
-map('i', '<C-M-8>', '[', opts)
--- Ctrl+Alt+9 => ]
-map('i', '<C-M-9>', ']', opts)
--- Ctrl+Alt+0 => }
-map('i', '<C-M-0>', '}', opts)
+-- Ctrl+Alt+7 => insert "{}" then move left
+map('i', '<C-M-7>', '{}<Left>', opts)
+-- Ctrl+Alt+8 => insert "[]" then move left
+map('i', '<C-M-8>', '[]<Left>', opts)
+-- Ctrl+Alt+9 => insert "]}" then … well, for consistency:
+map('i', '<C-M-9>', ']}<Left>', opts)
+-- Ctrl+Alt+0 => insert "{}" again if you like
+map('i', '<C-M-0>', '{}<Left>', opts)
+
