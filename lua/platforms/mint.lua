@@ -27,7 +27,7 @@ map('i', '<C-M-7>', '{}<Left>', opts)
 -- Ctrl+Alt+8 => insert "[]" then move left
 map('i', '<C-M-8>', '[]<Left>', opts)
 -- Ctrl+Alt+9 => insert "]}" then … well, for consistency:
-map('i', '<C-M-9>', ']}<Left>', opts)
+map('i', '<C-M-9>', ']<Left>', opts)
 -- Ctrl+Alt+0 => insert "{}" again if you like
-map('i', '<C-M-0>', '{}<Left>', opts)
+map('i', '<C-M-0>', '}<Left>', opts)
 
