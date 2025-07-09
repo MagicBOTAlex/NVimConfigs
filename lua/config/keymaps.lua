@@ -2,7 +2,7 @@
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
-map("n", "<M-Left>", "<C-o>", opts) -- Alt + Left = Jump back
+map("n", "<M-Left>", "<C-o>", opts)  -- Alt + Left = Jump back
 map("n", "<M-Right>", "<C-i>", opts) -- Alt + Right = Jump forward
 
 -- Make not copy by default
@@ -64,8 +64,11 @@ vim.keymap.set("i", "<C-h>", "<C-w>", { desc = "Delete previous word" })
 -- Place cursor at selection end after yank
 vim.keymap.set("v", "y", "y`>", { noremap = true, silent = true })
 
--- Make left alt + backslash exit terminal mode
-vim.keymap.set("t", "<M-<>", [[<C-\><C-n>]], { noremap = true, silent = true })
+-- Exit terminal mode with Ctrl+<
+vim.keymap.set('t', '<C-<>', [[<C-\><C-n>]], {
+  noremap = true,
+  silent = true,
+})
 
 local opts = { noremap = true, silent = true }
 
@@ -96,8 +99,8 @@ vim.keymap.set({ "n", "v" }, "<PageUp>", "<C-u>", { silent = true, desc = "Half-
 -- directory Neovim was opened from (or has as its current dir).
 
 vim.keymap.set(
-  "n", -- mode: normal
-  "<leader>gp", -- key sequence
+  "n",                  -- mode: normal
+  "<leader>gp",         -- key sequence
   ":!git pull<CR><CR>", -- command to run
   { silent = true, desc = "Git pull (cwd)" }
 )
@@ -145,6 +148,7 @@ local function smart_open(key)
   feedkeys(t(key, true, false, true), "n", false)
 end
 
+
 -- map both 'o' (below) and 'O' (above)
 for _, key in ipairs({ "o", "O" }) do
   vim.keymap.set("n", key, function()
@@ -157,3 +161,7 @@ map("n", "<C-w><C-Left>", "<C-w><Left>", { desc = "Move to left window" })
 map("n", "<C-w><C-Right>", "<C-w><Right>", { desc = "Move to right window" })
 map("n", "<C-w><C-Up>", "<C-w><Up>", { desc = "Move to upper window" })
 map("n", "<C-w><C-Down>", "<C-w><Down>", { desc = "Move to lower window" })
+
+-- cut (yank+delete) inner single-quote text with xi'
+vim.keymap.set('n', "xi'", [[yi'"_di']], { noremap = true, silent = true })
+vim.keymap.set('n', "xa'", [[ya'"_da']], { noremap = true, silent = true })
