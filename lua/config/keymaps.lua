@@ -139,7 +139,7 @@ local t = vim.api.nvim_replace_termcodes
 
 -- helper: open N lines with {key} (either "o" or "O")
 local function smart_open(key)
-  local cnt = vim.v.count1
+  local cnt = vim.v.count
   -- for each extra count, open one line and immediately go back to normal
   for _ = 2, cnt do
     feedkeys(t(key .. "<Esc>", true, false, true), "n", false)
@@ -162,6 +162,6 @@ map("n", "<C-w><C-Right>", "<C-w><Right>", { desc = "Move to right window" })
 map("n", "<C-w><C-Up>", "<C-w><Up>", { desc = "Move to upper window" })
 map("n", "<C-w><C-Down>", "<C-w><Down>", { desc = "Move to lower window" })
 
--- cut (yank+delete) inner single-quote text with xi'
-vim.keymap.set('n', "xi'", [[yi'"_di']], { noremap = true, silent = true })
-vim.keymap.set('n', "xa'", [[ya'"_da']], { noremap = true, silent = true })
+-- cut inner-tag (yank & delete) with xit / xat
+vim.keymap.set('n', 'xit', [[yit"_dit]], { noremap = true, silent = true, nowait = true, desc = "Cut inside tag" })
+vim.keymap.set('n', 'xat', [[yat"_dat]], { noremap = true, silent = true, nowait = true, desc = "Cut around tag" })
