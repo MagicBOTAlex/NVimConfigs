@@ -64,11 +64,13 @@ vim.keymap.set("i", "<C-h>", "<C-w>", { desc = "Delete previous word" })
 -- Place cursor at selection end after yank
 vim.keymap.set("v", "y", "y`>", { noremap = true, silent = true })
 
--- Exit terminal mode with Ctrl+<
-vim.keymap.set('t', '<C-<>', [[<C-\><C-n>]], {
-  noremap = true,
-  silent = true,
-})
+-- Exit terminal mode with ½
+vim.api.nvim_set_keymap(
+  't',
+  '½',
+  '<C-\\><C-n>',
+  { noremap = true, silent = true }
+)
 
 local opts = { noremap = true, silent = true }
 
