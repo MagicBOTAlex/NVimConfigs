@@ -167,3 +167,27 @@ map("n", "<C-w><C-Down>", "<C-w><Down>", { desc = "Move to lower window" })
 -- cut inner-tag (yank & delete) with xit / xat
 vim.keymap.set('n', 'xit', [[yit"_dit]], { noremap = true, silent = true, nowait = true, desc = "Cut inside tag" })
 vim.keymap.set('n', 'xat', [[yat"_dat]], { noremap = true, silent = true, nowait = true, desc = "Cut around tag" })
+
+vim.keymap.set({ 'n', 'x', 'o' }, 'E', function()
+  -- get cursor and line
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local line    = vim.api.nvim_get_current_line()
+  -- look for the next " on this line
+  local rest    = line:sub(col + 2)
+  local i       = rest:find('"')
+  if i then
+    -- if found, do t" (move right until before the ")
+    vim.cmd('normal! t"')
+  else
+    -- else, use the usual E motion
+    vim.cmd('normal! E')
+  end
+end, opts)
+
+vim.api.nvim_create_user_command('W',
+  function(opts)
+    -- if you typed :W! then opts.bang is true, so we forward the bang
+    vim.cmd('write' .. (opts.bang and '!' or ''))
+  end,
+  { bang = true }  -- allow :W!
+)
