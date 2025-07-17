@@ -168,20 +168,25 @@ map("n", "<C-w><C-Down>", "<C-w><Down>", { desc = "Move to lower window" })
 vim.keymap.set('n', 'xit', [[yit"_dit]], { noremap = true, silent = true, nowait = true, desc = "Cut inside tag" })
 vim.keymap.set('n', 'xat', [[yat"_dat]], { noremap = true, silent = true, nowait = true, desc = "Cut around tag" })
 
+-- E modification selection
+local opts = { noremap = true, silent = true }
 vim.keymap.set({ 'n', 'x', 'o' }, 'E', function()
-  -- get cursor and line
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   local line    = vim.api.nvim_get_current_line()
-  -- look for the next " on this line
+  -- get the text after the cursor
   local rest    = line:sub(col + 2)
-  local i       = rest:find('"')
-  if i then
-    -- if found, do t" (move right until before the ")
-    vim.cmd('normal! t"')
-  else
-    -- else, use the usual E motion
-    vim.cmd('normal! E')
+  -- find the next quote
+  local qi      = rest:find('"', 1, true)
+  if qi then
+    -- see what's between here and that quote
+    local between = rest:sub(1, qi - 1)
+    -- if there's NO space in there, we're on the last class/attribute piece
+    if not between:find('%s') then
+      return vim.cmd('normal! t"')
+    end
   end
+  -- otherwise, do normal E
+  vim.cmd('normal! E')
 end, opts)
 
 vim.api.nvim_create_user_command('W',
