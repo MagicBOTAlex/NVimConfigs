@@ -95,6 +95,18 @@ vim.keymap.set({ "n", "v" }, "<PageDown>", "<C-d>", { silent = true, desc = "Hal
 -- Remap PageUp   to half-page up
 vim.keymap.set({ "n", "v" }, "<PageUp>", "<C-u>", { silent = true, desc = "Half-page up" })
 
+-- Ctrl+Down/Up = half-page down/up (same as <C-d>/<C-u>)
+vim.keymap.set({ "n", "x" }, "<C-Down>", "<C-d>", { silent = true, desc = "Half-page down" })
+vim.keymap.set({ "n", "x" }, "<C-Up>", "<C-u>", { silent = true, desc = "Half-page up" })
+
+-- Ctrl+Left/Right = horizontal scroll (view moves, cursor stays)
+vim.keymap.set({ "n", "x" }, "<C-Left>", "zh", { silent = true, desc = "Scroll left" })
+vim.keymap.set({ "n", "x" }, "<C-Right>", "zl", { silent = true, desc = "Scroll right" })
+
+-- Optional: faster horizontal scroll with Shift
+vim.keymap.set({ "n", "x" }, "<C-S-Left>", "zH", { silent = true, desc = "Scroll left fast" })
+vim.keymap.set({ "n", "x" }, "<C-S-Right>", "zL", { silent = true, desc = "Scroll right fast" })
+
 -- ──────────────────────────────────────────────────────────────
 -- 1) Git pull in the current working directory
 -- ──────────────────────────────────────────────────────────────
