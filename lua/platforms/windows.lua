@@ -14,15 +14,15 @@ if stat then
   end
 end
 
--- OSC-52 clipboard
-vim.g.clipboard = {
-  name = "OSC 52",
-  copy = {
-    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-  },
-  paste = {
-    ["+"] = function() end,
-    ["*"] = function() end,
-  },
-}
+-- -- OSC-52 clipboard
+-- vim.g.clipboard = {
+--   name = "OSC 52",
+--   copy = {
+--     ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+--     ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+--   },
+--   paste = {
+--     ["+"] = function() end,
+--     ["*"] = function() end,
+--   },
+-- }

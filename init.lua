@@ -58,3 +58,11 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- force '=' to use prittier
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "svelte",
+  callback = function()
+    -- Uses your project's Prettier config and plugins
+    vim.bo.equalprg = "npx prettier --stdin-filepath %"
+  end,
+})

@@ -2,7 +2,7 @@
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
-map("n", "<M-Left>", "<C-o>", opts)  -- Alt + Left = Jump back
+map("n", "<M-Left>", "<C-o>", opts) -- Alt + Left = Jump back
 map("n", "<M-Right>", "<C-i>", opts) -- Alt + Right = Jump forward
 
 -- Make not copy by default
@@ -65,12 +65,7 @@ vim.keymap.set("i", "<C-h>", "<C-w>", { desc = "Delete previous word" })
 vim.keymap.set("v", "y", "y`>", { noremap = true, silent = true })
 
 -- Exit terminal mode with ½
-vim.api.nvim_set_keymap(
-  't',
-  '½',
-  '<C-\\><C-n>',
-  { noremap = true, silent = true }
-)
+vim.api.nvim_set_keymap("t", "½", "<C-\\><C-n>", { noremap = true, silent = true })
 
 local opts = { noremap = true, silent = true }
 
@@ -82,9 +77,15 @@ vim.keymap.set("n", "<A-Up>", "<cmd>m .-2<CR>==", vim.tbl_extend("force", opts, 
 vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", vim.tbl_extend("force", opts, { desc = "Move block down" }))
 vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", vim.tbl_extend("force", opts, { desc = "Move block up" }))
 
--- Alt + d to duplicate current line
-vim.keymap.set("n", "<M-d>", "yyp", { noremap = true, silent = true })
-vim.keymap.set("v", "<M-d>", "yp", { noremap = true, silent = true })
+-- Duplicate current line
+vim.keymap.set("n", "<M-d>", function()
+  vim.cmd("normal! yyp")
+end, { silent = true, desc = "Duplicate line" })
+
+-- Duplicate current selection (works for char/line/block visual)
+vim.keymap.set("x", "<M-d>", function()
+  vim.cmd([[normal! y`>p]])
+end, { silent = true, desc = "Duplicate selection" })
 
 -- Ctrl + s in insert mode to save
 vim.keymap.set("i", "<C-s>", "<C-o>:w<CR>", { silent = true })
@@ -101,8 +102,8 @@ vim.keymap.set({ "n", "v" }, "<PageUp>", "<C-u>", { silent = true, desc = "Half-
 -- directory Neovim was opened from (or has as its current dir).
 
 vim.keymap.set(
-  "n",                  -- mode: normal
-  "<leader>gp",         -- key sequence
+  "n", -- mode: normal
+  "<leader>gp", -- key sequence
   ":!git pull<CR><CR>", -- command to run
   { silent = true, desc = "Git pull (cwd)" }
 )
@@ -150,7 +151,6 @@ local function smart_open(key)
   feedkeys(t(key, true, false, true), "n", false)
 end
 
-
 -- map both 'o' (below) and 'O' (above)
 for _, key in ipairs({ "o", "O" }) do
   vim.keymap.set("n", key, function()
@@ -165,34 +165,35 @@ map("n", "<C-w><C-Up>", "<C-w><Up>", { desc = "Move to upper window" })
 map("n", "<C-w><C-Down>", "<C-w><Down>", { desc = "Move to lower window" })
 
 -- cut inner-tag (yank & delete) with xit / xat
-vim.keymap.set('n', 'xit', [[yit"_dit]], { noremap = true, silent = true, nowait = true, desc = "Cut inside tag" })
-vim.keymap.set('n', 'xat', [[yat"_dat]], { noremap = true, silent = true, nowait = true, desc = "Cut around tag" })
+vim.keymap.set("n", "xit", [[yit"_dit]], { noremap = true, silent = true, nowait = true, desc = "Cut inside tag" })
+vim.keymap.set("n", "xat", [[yat"_dat]], { noremap = true, silent = true, nowait = true, desc = "Cut around tag" })
 
 -- E modification selection
 local opts = { noremap = true, silent = true }
-vim.keymap.set({ 'n', 'x', 'o' }, 'E', function()
+vim.keymap.set({ "n", "x", "o" }, "E", function()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-  local line    = vim.api.nvim_get_current_line()
+  local line = vim.api.nvim_get_current_line()
   -- get the text after the cursor
-  local rest    = line:sub(col + 2)
+  local rest = line:sub(col + 2)
   -- find the next quote
-  local qi      = rest:find('"', 1, true)
+  local qi = rest:find('"', 1, true)
   if qi then
     -- see what's between here and that quote
     local between = rest:sub(1, qi - 1)
     -- if there's NO space in there, we're on the last class/attribute piece
-    if not between:find('%s') then
+    if not between:find("%s") then
       return vim.cmd('normal! t"')
     end
   end
   -- otherwise, do normal E
-  vim.cmd('normal! E')
+  vim.cmd("normal! E")
 end, opts)
 
-vim.api.nvim_create_user_command('W',
+vim.api.nvim_create_user_command(
+  "W",
   function(opts)
     -- if you typed :W! then opts.bang is true, so we forward the bang
-    vim.cmd('write' .. (opts.bang and '!' or ''))
+    vim.cmd("write" .. (opts.bang and "!" or ""))
   end,
-  { bang = true }  -- allow :W!
+  { bang = true } -- allow :W!
 )

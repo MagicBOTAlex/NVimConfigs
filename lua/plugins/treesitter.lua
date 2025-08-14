@@ -19,6 +19,7 @@ return {
         "scss",
         "svelte",
         "latex",
+        "astro",
       },
       highlight = {
         enable = true,
