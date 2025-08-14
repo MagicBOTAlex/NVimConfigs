@@ -103,9 +103,12 @@ vim.keymap.set({ "n", "x" }, "<C-Up>", "<C-u>", { silent = true, desc = "Half-pa
 vim.keymap.set({ "n", "x" }, "<C-Left>", "zh", { silent = true, desc = "Scroll left" })
 vim.keymap.set({ "n", "x" }, "<C-Right>", "zl", { silent = true, desc = "Scroll right" })
 
--- Optional: faster horizontal scroll with Shift
+--faster horizontal scroll with Shift
 vim.keymap.set({ "n", "x" }, "<C-S-Left>", "zH", { silent = true, desc = "Scroll left fast" })
 vim.keymap.set({ "n", "x" }, "<C-S-Right>", "zL", { silent = true, desc = "Scroll right fast" })
+
+-- Ctrl+Shift+C → yank to system clipboard ("+ register)
+vim.keymap.set({ "n", "x" }, "<C-c>", '"+y', { noremap = true, silent = true, desc = "Yank to clipboard" })
 
 -- ──────────────────────────────────────────────────────────────
 -- 1) Git pull in the current working directory
