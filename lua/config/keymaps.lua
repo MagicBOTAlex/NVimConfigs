@@ -69,13 +69,13 @@ vim.api.nvim_set_keymap("t", "½", "<C-\\><C-n>", { noremap = true, silent = tru
 
 local opts = { noremap = true, silent = true }
 
--- Normal-mode: Alt+Down / Alt+Up
-vim.keymap.set("n", "<A-Down>", "<cmd>m .+1<CR>==", vim.tbl_extend("force", opts, { desc = "Move line down" }))
-vim.keymap.set("n", "<A-Up>", "<cmd>m .-2<CR>==", vim.tbl_extend("force", opts, { desc = "Move line up" }))
+-- Normal-mode: Alt+Down / Alt+Up (no reindent)
+vim.keymap.set("n", "<A-Down>", ":m .+1<CR>", vim.tbl_extend("force", opts, { desc = "Move line down" }))
+vim.keymap.set("n", "<A-Up>", ":m .-2<CR>", vim.tbl_extend("force", opts, { desc = "Move line up" }))
 
--- Visual-mode block moves
-vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", vim.tbl_extend("force", opts, { desc = "Move block down" }))
-vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", vim.tbl_extend("force", opts, { desc = "Move block up" }))
+-- Visual-mode block moves (keep selection, no reindent)
+vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv", vim.tbl_extend("force", opts, { desc = "Move block down" }))
+vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv", vim.tbl_extend("force", opts, { desc = "Move block up" }))
 
 -- Duplicate current line
 vim.keymap.set("n", "<M-d>", function()
@@ -103,12 +103,25 @@ vim.keymap.set({ "n", "x" }, "<C-Up>", "<C-u>", { silent = true, desc = "Half-pa
 vim.keymap.set({ "n", "x" }, "<C-Left>", "zh", { silent = true, desc = "Scroll left" })
 vim.keymap.set({ "n", "x" }, "<C-Right>", "zl", { silent = true, desc = "Scroll right" })
 
---faster horizontal scroll with Shift
-vim.keymap.set({ "n", "x" }, "<C-S-Left>", "zH", { silent = true, desc = "Scroll left fast" })
-vim.keymap.set({ "n", "x" }, "<C-S-Right>", "zL", { silent = true, desc = "Scroll right fast" })
-
 -- Ctrl+Shift+C → yank to system clipboard ("+ register)
 vim.keymap.set({ "n", "x" }, "<C-c>", '"+y', { noremap = true, silent = true, desc = "Yank to clipboard" })
+
+-- Resize step in cells
+local step = 3
+
+-- Works in GUIs and in terminals that pass Ctrl+Shift+Arrows through
+vim.keymap.set("n", "<C-S-A-Left>", function()
+  vim.cmd("vertical resize -" .. step)
+end, { desc = "Narrow window" })
+vim.keymap.set("n", "<C-S-A-Right>", function()
+  vim.cmd("vertical resize +" .. step)
+end, { desc = "Widen window" })
+vim.keymap.set("n", "<C-S-A-Up>", function()
+  vim.cmd("resize +" .. step)
+end, { desc = "Taller window" })
+vim.keymap.set("n", "<C-S-A-Down>", function()
+  vim.cmd("resize -" .. step)
+end, { desc = "Shorter window" })
 
 -- ──────────────────────────────────────────────────────────────
 -- 1) Git pull in the current working directory
