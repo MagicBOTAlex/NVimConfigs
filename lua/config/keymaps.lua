@@ -112,10 +112,6 @@ vim.keymap.set({ "n", "v" }, "<PageUp>", "<C-u>", { silent = true, desc = "Half-
 vim.keymap.set({ "n", "x" }, "<C-Down>", "<C-d>", { silent = true, desc = "Half-page down" })
 vim.keymap.set({ "n", "x" }, "<C-Up>", "<C-u>", { silent = true, desc = "Half-page up" })
 
--- Ctrl+Left/Right = horizontal scroll (view moves, cursor stays)
-vim.keymap.set({ "n", "x" }, "<C-Left>", "zh", { silent = true, desc = "Scroll left" })
-vim.keymap.set({ "n", "x" }, "<C-Right>", "zl", { silent = true, desc = "Scroll right" })
-
 -- Ctrl+Shift+C → yank to system clipboard ("+ register)
 vim.keymap.set({ "n", "x" }, "<C-c>", '"+y', { noremap = true, silent = true, desc = "Yank to clipboard" })
 
