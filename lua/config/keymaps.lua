@@ -12,13 +12,16 @@ local opts = { noremap = true, silent = true }
 -- Hide the mouse pointer while typing; it will reappear on the next mouse move
 vim.opt.mousehide = true
 
--- Normal-mode
+-- Disable copy on delete
 map("n", "d", '"_d', opts)
 map("n", "c", '"_c', opts)
+map("n", "D", '"_D', opts)
+map("n", "C", '"_C', opts)
 
--- Visual-mode
 map("v", "d", '"_d', opts)
 map("v", "c", '"_c', opts)
+map("v", "D", '"_D', opts)
+map("v", "C", '"_C', opts)
 
 map("v", "xx", '"+dd', opts)
 map("n", "xx", '"+dd', opts)
