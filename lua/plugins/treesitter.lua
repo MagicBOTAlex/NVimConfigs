@@ -20,6 +20,7 @@ return {
         "svelte",
         "latex",
         "astro",
+        "nix",
       },
       highlight = {
         enable = true,

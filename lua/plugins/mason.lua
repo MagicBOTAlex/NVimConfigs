@@ -13,7 +13,6 @@ return {
       require("mason-tool-installer").setup({
         ensure_installed = {
           "bash-language-server",
-          "codelldb",
           "css-lsp",
           "cssmodules-language-server",
           -- "elixir-ls",
@@ -32,6 +31,9 @@ return {
           "svelte-language-server",
           "tailwindcss-language-server",
           "typescript-language-server",
+          "nixfmt",
+          "nixpkgs-fmt",
+          "rnix-lsp",
         },
         auto_update = true,
       })
