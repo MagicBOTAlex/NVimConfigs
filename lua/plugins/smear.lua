@@ -1,4 +1,4 @@
--- return {
+return {
 --   "sphamba/smear-cursor.nvim",
 --
 --   opts = {                                -- Default  Range
@@ -10,4 +10,4 @@
 --     distance_stop_animating = 0.5,        -- 0.1      > 0
 --   time_interval = 30
 -- },
--- }
+}
