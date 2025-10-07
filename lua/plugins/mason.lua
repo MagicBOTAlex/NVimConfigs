@@ -15,7 +15,7 @@ return {
           "bash-language-server",
           "css-lsp",
           "cpplint" ,
-          "cpptools",
+          -- "cpptools",
           "cssmodules-language-server",
           -- "elixir-ls",
           -- "emmet-language-server",
