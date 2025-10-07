@@ -22,7 +22,6 @@ return {
         "astro",
         "nix",
         "python",
-        "c++",
       },
       highlight = {
         enable = true,
