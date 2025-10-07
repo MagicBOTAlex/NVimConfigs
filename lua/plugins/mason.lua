@@ -14,6 +14,8 @@ return {
         ensure_installed = {
           "bash-language-server",
           "css-lsp",
+          "cpplint" ,
+          "cpptools",
           "cssmodules-language-server",
           -- "elixir-ls",
           -- "emmet-language-server",

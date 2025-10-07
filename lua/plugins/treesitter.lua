@@ -21,6 +21,8 @@ return {
         "latex",
         "astro",
         "nix",
+        "python",
+        "c++",
       },
       highlight = {
         enable = true,
