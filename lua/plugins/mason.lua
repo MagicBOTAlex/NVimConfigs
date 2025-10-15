@@ -36,6 +36,7 @@ return {
           "nixfmt",
           "nixpkgs-fmt",
           "rnix-lsp",
+          "golangci-lint",
         },
         auto_update = true,
       })

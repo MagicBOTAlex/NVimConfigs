@@ -22,6 +22,7 @@ return {
         "astro",
         "nix",
         "python",
+        "go",
       },
       highlight = {
         enable = true,
