@@ -2,14 +2,15 @@
 require("config.lazy")
 require("platforms")
 
--- Default theme
-vim.opt.termguicolors = true
-vim.api.nvim_create_autocmd("VimEnter", {
-  once = true,
-  callback = function()
-    vim.cmd("colorscheme vscode")
-  end,
-})
+-- -- Default theme
+-- vim.opt.termguicolors = true
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   once = true,
+--   callback = function()
+--     vim.cmd("colorscheme vscode")
+--   end,
+-- })
+
 -- after you set up Treesitter (or in your init.lua)
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "svelte",
