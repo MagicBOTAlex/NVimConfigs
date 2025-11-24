@@ -35,7 +35,6 @@ require("lazy").setup({
     --   "tokyonight",
     --   "habamax",
     -- },
-    colorscheme = {}
   },
   checker = {
     enabled = true, -- check for plugin updates periodically
