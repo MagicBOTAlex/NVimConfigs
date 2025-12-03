@@ -95,7 +95,7 @@ vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv", vim.tbl_extend("force", opts, { d
 
 -- Duplicate current line
 vim.keymap.set("n", "<M-d>", function()
-  vim.cmd("normal! yyp")
+  vim.cmd([[normal! "dyy"dp]])
 end, { silent = true, desc = "Duplicate line" })
 
 -- Duplicate current selection (works for char/line/block visual)
