@@ -6,7 +6,7 @@ return {
   event = "BufReadPost",
   opts = {
     provider_selector = function(bufnr, filetype, buftype)
-      return { "lsp", "treesitter", "indent" }
+      return { "treesitter", "indent" }
     end,
   },
 
