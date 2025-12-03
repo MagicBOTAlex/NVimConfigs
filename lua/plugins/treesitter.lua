@@ -42,8 +42,8 @@ return {
             ["af"] = "@function.outer",
             ["if"] = "@function.inner",
             -- You can also add other mappings if you want (methods, classes, etc.)
-            -- ["ac"] = "@class.outer",
-            -- ["ic"] = "@class.inner",
+            ["ac"] = "@class.outer",
+            ["ic"] = "@class.inner",
           },
         },
       },
