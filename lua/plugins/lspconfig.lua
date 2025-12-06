@@ -52,6 +52,20 @@ return {
           -- you can pass any server-specific settings here;
           -- empty table is fine if you just want defaults
         },
+
+        basedpyright = {
+          settings = {
+            basedpyright = {
+              analysis = {
+                autoImportCompletions = true,
+                diagnosticSeverityOverrides = {
+                  reportUninitializedInstanceVariable = "none", -- or "warning"
+                },
+              },
+            },
+          },
+        },
+
       },
       -- some LazyVim setups need a `setup` override so the server actually spawns:
       setup = {
@@ -66,5 +80,16 @@ return {
         end,
       },
     },
-  },
+    diagnostics = {
+      virtual_text = {
+        severity = vim.diagnostic.severity.ERROR,
+      },
+      signs = {
+        severity = vim.diagnostic.severity.ERROR,
+      },
+      underline = {
+        severity = vim.diagnostic.severity.ERROR,
+      },
+    },
+  }
 }
