@@ -5,6 +5,9 @@ return {
     opts = {
       -- make sure explorer is enabled
       explorer = { enabled = true },
+      terminal = {
+        win = {  position = "right" } ,
+      };
 
       picker = {
         -- we only care about the explorer source here
