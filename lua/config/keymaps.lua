@@ -255,3 +255,8 @@ vim.keymap.set("n", "<leader>uW", function()
   local msg = warnings_visible and "Enabled Warnings" or "Disabled Warnings (Errors only)"
   vim.notify(msg, vim.log.levels.INFO, { title = "Diagnostics" })
 end, { desc = "Toggle Warnings" })
+
+-- Open terminal in current file
+vim.keymap.set("n", "<leader>cT", function()
+  Snacks.terminal(nil, { cwd = vim.fn.expand("%:p:h") })
+end, { desc = "Terminal (Current File Dir)" })

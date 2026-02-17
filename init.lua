@@ -1,6 +1,7 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")
 require("platforms")
+require("config/flakeTerminalFix")
 
 -- -- Default theme
 -- vim.opt.termguicolors = true
