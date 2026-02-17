@@ -122,16 +122,16 @@ vim.keymap.set({ "n", "x" }, "<C-c>", '"+y', { noremap = true, silent = true, de
 local step = 3
 
 -- Works in GUIs and in terminals that pass Ctrl+Shift+Arrows through
-vim.keymap.set("n", "<C-S-A-Left>", function()
+vim.keymap.set("n", "<S-A-Left>", function()
   vim.cmd("vertical resize -" .. step)
 end, { desc = "Narrow window" })
-vim.keymap.set("n", "<C-S-A-Right>", function()
+vim.keymap.set("n", "<S-A-Right>", function()
   vim.cmd("vertical resize +" .. step)
 end, { desc = "Widen window" })
-vim.keymap.set("n", "<C-S-A-Up>", function()
+vim.keymap.set("n", "<S-A-Up>", function()
   vim.cmd("resize +" .. step)
 end, { desc = "Taller window" })
-vim.keymap.set("n", "<C-S-A-Down>", function()
+vim.keymap.set("n", "<S-A-Down>", function()
   vim.cmd("resize -" .. step)
 end, { desc = "Shorter window" })
 
@@ -237,3 +237,21 @@ vim.api.nvim_create_user_command(
   end,
   { bang = true } -- allow :W!
 )
+
+-- <leader>uW to toggle warnings
+local warnings_visible = true
+vim.keymap.set("n", "<leader>uW", function()
+  warnings_visible = not warnings_visible
+  
+  -- If visible, show everything (nil). If not, show only ERRORs.
+  local severity_filter = warnings_visible and nil or { min = vim.diagnostic.severity.ERROR }
+
+  vim.diagnostic.config({
+    virtual_text = { severity = severity_filter },
+    signs = { severity = severity_filter },
+    underline = { severity = severity_filter },
+  })
+
+  local msg = warnings_visible and "Enabled Warnings" or "Disabled Warnings (Errors only)"
+  vim.notify(msg, vim.log.levels.INFO, { title = "Diagnostics" })
+end, { desc = "Toggle Warnings" })

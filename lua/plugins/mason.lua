@@ -14,7 +14,7 @@ return {
         ensure_installed = {
           "bash-language-server",
           "css-lsp",
-          "cpplint" ,
+          "cpplint",
           -- "cpptools",
           "cssmodules-language-server",
           -- "elixir-ls",
@@ -35,7 +35,7 @@ return {
           "svelte-language-server",
           "tailwindcss-language-server",
           "typescript-language-server",
-          "nixfmt",
+          -- "nixfmt",
           "nixpkgs-fmt",
           "rnix-lsp",
           "golangci-lint",

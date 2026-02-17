@@ -59,7 +59,15 @@ return {
               analysis = {
                 autoImportCompletions = true,
                 diagnosticSeverityOverrides = {
-                  reportUninitializedInstanceVariable = "none", -- or "warning"
+                  reportUninitializedInstanceVariable = "none",
+                  reportUnknownParameterType = "none",
+                  reportUnknownMemberType = "none",
+                  reportUnknownVariableType = "none",
+                  reportUnknownArgumentType = "none",
+                  reportUnusedCallResult = "none",
+                  reportUnusedVariable = "none",
+                  reportAny = "none",
+                  reportMissingParameterType = "none",
                 },
               },
             },
