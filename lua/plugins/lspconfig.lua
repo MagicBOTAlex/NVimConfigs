@@ -74,6 +74,21 @@ return {
           },
         },
 
+        clangd = {
+          mason = false,
+          cmd = {
+            "clangd",
+            "--background-index",
+            "--clang-tidy",
+            "--log=verbose",
+            -- UPDATE THIS LINE: Add **/*g++* to the list
+            "--query-driver=**/*gcc*,**/*g++*"
+          },
+          root_dir = function(fname)
+            return require("lspconfig.util").root_pattern("compile_commands.json", "platformio.ini", ".git")(fname)
+          end,
+        },
+
       },
       -- some LazyVim setups need a `setup` override so the server actually spawns:
       setup = {
