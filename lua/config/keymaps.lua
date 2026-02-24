@@ -112,8 +112,20 @@ vim.keymap.set({ "n", "v" }, "<PageDown>", "<C-d>", { silent = true, desc = "Hal
 vim.keymap.set({ "n", "v" }, "<PageUp>", "<C-u>", { silent = true, desc = "Half-page up" })
 
 -- Ctrl+Down/Up = half-page down/up (same as <C-d>/<C-u>)
-vim.keymap.set({ "n", "x" }, "<C-Down>", "<C-d>", { silent = true, desc = "Half-page down" })
-vim.keymap.set({ "n", "x" }, "<C-Up>", "<C-u>", { silent = true, desc = "Half-page up" })
+vim.keymap.set({ "n", "x" }, "<S-Down>", "<C-d>", { silent = true, desc = "Half-page down" })
+vim.keymap.set({ "n", "x" }, "<S-Up>", "<C-u>", { silent = true, desc = "Half-page up" })
+
+-- Scroll half page down (cursor stays on same line)
+vim.keymap.set('n', '<C-Down>', function()
+  local half_height = math.floor(vim.api.nvim_win_get_height(0) / 2)
+  return half_height .. [[<C-e>]]
+end, { expr = true, desc = "Scroll view down half page" })
+
+-- Scroll half page up (cursor stays on same line)
+vim.keymap.set('n', '<C-Up>', function()
+  local half_height = math.floor(vim.api.nvim_win_get_height(0) / 2)
+  return half_height .. [[<C-y>]]
+end, { expr = true, desc = "Scroll view up half page" })
 
 -- Ctrl+Shift+C → yank to system clipboard ("+ register)
 vim.keymap.set({ "n", "x" }, "<C-c>", '"+y', { noremap = true, silent = true, desc = "Yank to clipboard" })
