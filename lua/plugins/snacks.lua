@@ -6,8 +6,8 @@ return {
       -- make sure explorer is enabled
       explorer = { enabled = true },
       terminal = {
-        win = {  position = "right" } ,
-      };
+        win = { position = "right" },
+      },
 
       picker = {
         -- we only care about the explorer source here
@@ -27,6 +27,10 @@ return {
           },
         },
         hidden = false,
+      },
+      notifier = {
+        enabled = true,
+        top_down = false,
       },
     },
   },

@@ -81,8 +81,7 @@ return {
             "--background-index",
             "--clang-tidy",
             "--log=verbose",
-            -- UPDATE THIS LINE: Add **/*g++* to the list
-            "--query-driver=**/*gcc*,**/*g++*"
+            "--query-driver=/**/xtensa-*-elf-gcc,/**/gcc,/**/g++,**/.platformio/packages/*/bin/*gcc*"
           },
           root_dir = function(fname)
             return require("lspconfig.util").root_pattern("compile_commands.json", "platformio.ini", ".git")(fname)
