@@ -51,18 +51,31 @@ vim.schedule(function()
     end
   end)
 
--- OSC-52 clipboard over SSH
-local function copy(lines, reg)
+  -- 1. Define a robust copy function
+local function osc52_copy(lines, _)
+    -- Join lines and encode to base64 using Neovim's built-in function
     local content = table.concat(lines, '\n')
-    local base64 = vim.fn.system('base64 | tr -d "\n"', content)
+    local base64 = vim.base64.encode(content)
+    
+    -- Construct the OSC-52 sequence
     local osc = string.format('\27]52;c;%s\7', base64)
-    io.stderr:write(osc)
+    
+    -- Write directly to the terminal's stderr channel
+    vim.api.nvim_chan_send(vim.v.stderr, osc)
 end
 
+-- 2. Register the provider correctly
 vim.g.clipboard = {
-    name = 'osc52-manual',
-    copy = { ['+'] = copy, ['*'] = copy },
-    paste = { ['+'] = function() return {''} end, ['*'] = function() return {''} end },
+    name = 'osc52',
+    copy = {
+        ['+'] = osc52_copy,
+        ['*'] = osc52_copy,
+    },
+    paste = {
+        ['+'] = function() return vim.fn.getreg('+') end,
+        ['*'] = function() return vim.fn.getreg('*') end,
+    },
 }
 
+-- 3. The "Magic" link: sync default yank to the '+' register
 vim.opt.clipboard = 'unnamedplus'
