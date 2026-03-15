@@ -40,42 +40,40 @@ if not is_ssh_session() then
 end
 
 vim.schedule(function()
-    if _G.Snacks and Snacks.notifier then
-      Snacks.notifier.notify("OSC 52 Clipboard Enabled", "info", {
-        title = "Platform: SSH",
-        icon = "󰒍",
-      })
-    else
-      -- Fallback if Snacks isn't ready
-      print("SSH Platform: OSC 52 Enabled")
-    end
-  end)
+  if _G.Snacks and Snacks.notifier then
+    Snacks.notifier.notify("OSC 52 Clipboard Enabled", "info", {
+      title = "Platform: SSH",
+      icon = "󰒍",
+    })
+  else
+    -- Fallback if Snacks isn't ready
+    print("SSH Platform: OSC 52 Enabled")
+  end
+end)
 
-  -- 1. Define a robust copy function
-local function osc52_copy(lines, _)
-    -- Join lines and encode to base64 using Neovim's built-in function
-    local content = table.concat(lines, '\n')
+local function send_osc52(lines)
+    local content = table.concat(lines, "\n")
     local base64 = vim.base64.encode(content)
+    local sequence = string.format("\27]52;c;%s\7", base64)
     
-    -- Construct the OSC-52 sequence
-    local osc = string.format('\27]52;c;%s\7', base64)
-    
-    -- Write directly to the terminal's stderr channel
-    vim.api.nvim_chan_send(vim.v.stderr, osc)
+    -- Wrap for Tmux if necessary
+    if os.getenv("TMUX") then
+        sequence = string.format("\27Ptmux;\27%s\27\\", sequence)
+    end
+
+    -- Write directly to the terminal's stdout
+    io.stdout:write(sequence)
+    io.stdout:flush()
 end
 
--- 2. Register the provider correctly
-vim.g.clipboard = {
-    name = 'osc52',
-    copy = {
-        ['+'] = osc52_copy,
-        ['*'] = osc52_copy,
-    },
-    paste = {
-        ['+'] = function() return vim.fn.getreg('+') end,
-        ['*'] = function() return vim.fn.getreg('*') end,
-    },
-}
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+        -- Only sync if we're using the default or '+' register
+        if vim.v.event.regname == "" or vim.v.event.regname == "+" then
+            send_osc52(vim.v.event.regcontents)
+        end
+    end,
+})
 
 -- 3. The "Magic" link: sync default yank to the '+' register
 vim.opt.clipboard = 'unnamedplus'
