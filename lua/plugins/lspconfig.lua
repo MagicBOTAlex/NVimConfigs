@@ -80,8 +80,11 @@ return {
             "clangd",
             "--background-index",
             "--clang-tidy",
-            "--log=verbose",
-            "--query-driver=/**/xtensa-*-elf-gcc,/**/gcc,/**/g++,**/.platformio/packages/*/bin/*gcc*"
+            -- This is the most aggressive whitelist. 
+            -- It tells clangd: "If the compiler is in the JSON, I trust it."
+            "--query-driver=**", 
+            -- Optional: prevents "unsupported target" noise
+            "--fallback-style=Google", 
           },
           root_dir = function(fname)
             return require("lspconfig.util").root_pattern("compile_commands.json", "platformio.ini", ".git")(fname)
