@@ -210,6 +210,14 @@ for _, key in ipairs({ "o", "O" }) do
   end, { noremap = true, silent = true })
 end
 
+-- Disable auto comments on O
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    vim.opt_local.formatoptions:remove({ "o" })
+  end,
+})
+
 -- make Ctrl-w + Ctrl-Arrow act like Ctrl-w + Arrow
 map("n", "<C-w><C-Left>", "<C-w><Left>", { desc = "Move to left window" })
 map("n", "<C-w><C-Right>", "<C-w><Right>", { desc = "Move to right window" })
