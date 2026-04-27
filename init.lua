@@ -12,6 +12,9 @@ require("config/flakeTerminalFix")
 --   end,
 -- })
 
+-- Disable F1 for help
+vim.keymap.set({ 'n', 'i', 'v' }, '<F1>', '<nop>', { noremap = true, silent = true })
+
 -- after you set up Treesitter (or in your init.lua)
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "svelte",
