@@ -82,7 +82,7 @@ return {
             "--clang-tidy",
             -- This is the most aggressive whitelist. 
             -- It tells clangd: "If the compiler is in the JSON, I trust it."
-            "--query-driver=**", 
+            "--query-driver=**,/nix/store/*/bin/clang,/nix/store/*/bin/gcc", 
             -- Optional: prevents "unsupported target" noise
             "--fallback-style=Google", 
           },
