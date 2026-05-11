@@ -282,27 +282,27 @@ vim.keymap.set("n", "<leader>cT", function()
 end, { desc = "Terminal (Current File Dir)" })
 
 
--- show function signatures
-local hover_timer = vim.loop.new_timer()
-
-vim.api.nvim_create_autocmd("CursorMoved", {
-  callback = function()
-    hover_timer:stop()
-    hover_timer:start(2000, 0, vim.schedule_wrap(function()
-      local column = vim.api.nvim_win_get_cursor(0)[2]
-      local line = vim.api.nvim_get_current_line()
-      local cursor_char = string.sub(line, column + 1, column + 1)
-
-      -- Trigger only on letters, numbers, or underscores
-      if cursor_char:match("[%w_]") then
-        local params = vim.lsp.util.make_position_params()
-        vim.lsp.buf_request(0, "textDocument/hover", params, function(_, result, ctx, config)
-          -- Only open the window if the LSP actually returned documentation
-          if result and result.contents then
-            vim.lsp.handlers.hover(_, result, ctx, config)
-          end
-        end)
-      end
-    end))
-  end,
-})
+-- -- show function signatures
+-- local hover_timer = vim.loop.new_timer()
+--
+-- vim.api.nvim_create_autocmd("CursorMoved", {
+--   callback = function()
+--     hover_timer:stop()
+--     hover_timer:start(2000, 0, vim.schedule_wrap(function()
+--       local column = vim.api.nvim_win_get_cursor(0)[2]
+--       local line = vim.api.nvim_get_current_line()
+--       local cursor_char = string.sub(line, column + 1, column + 1)
+--
+--       -- Trigger only on letters, numbers, or underscores
+--       if cursor_char:match("[%w_]") then
+--         local params = vim.lsp.util.make_position_params()
+--         vim.lsp.buf_request(0, "textDocument/hover", params, function(_, result, ctx, config)
+--           -- Only open the window if the LSP actually returned documentation
+--           if result and result.contents then
+--             vim.lsp.handlers.hover(_, result, ctx, config)
+--           end
+--         end)
+--       end
+--     end))
+--   end,
+-- })
