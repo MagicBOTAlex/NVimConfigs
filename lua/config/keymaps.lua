@@ -2,7 +2,7 @@
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
-map("n", "<M-Left>", "<C-o>", opts) -- Alt + Left = Jump back
+map("n", "<M-Left>", "<C-o>", opts)  -- Alt + Left = Jump back
 map("n", "<M-Right>", "<C-i>", opts) -- Alt + Right = Jump forward
 
 -- Make not copy by default
@@ -28,7 +28,7 @@ map("n", "xx", '"+dd', opts)
 
 -- Normal mode
 vim.keymap.set('n', 'y', '"+y', opts)
-vim.keymap.set('n', 'yy', '"+yy', opts) 
+vim.keymap.set('n', 'yy', '"+yy', opts)
 vim.keymap.set('n', 'Y', '"+Y', opts)
 
 -- Visual/selection mode
@@ -154,8 +154,8 @@ end, { desc = "Shorter window" })
 -- directory Neovim was opened from (or has as its current dir).
 
 vim.keymap.set(
-  "n", -- mode: normal
-  "<leader>gp", -- key sequence
+  "n",                  -- mode: normal
+  "<leader>gp",         -- key sequence
   ":!git pull<CR><CR>", -- command to run
   { silent = true, desc = "Git pull (cwd)" }
 )
@@ -262,7 +262,7 @@ vim.api.nvim_create_user_command(
 local warnings_visible = true
 vim.keymap.set("n", "<leader>uW", function()
   warnings_visible = not warnings_visible
-  
+
   -- If visible, show everything (nil). If not, show only ERRORs.
   local severity_filter = warnings_visible and nil or { min = vim.diagnostic.severity.ERROR }
 
@@ -280,3 +280,29 @@ end, { desc = "Toggle Warnings" })
 vim.keymap.set("n", "<leader>cT", function()
   Snacks.terminal(nil, { cwd = vim.fn.expand("%:p:h") })
 end, { desc = "Terminal (Current File Dir)" })
+
+
+-- show function signatures
+local hover_timer = vim.loop.new_timer()
+
+vim.api.nvim_create_autocmd("CursorMoved", {
+  callback = function()
+    hover_timer:stop()
+    hover_timer:start(2000, 0, vim.schedule_wrap(function()
+      local column = vim.api.nvim_win_get_cursor(0)[2]
+      local line = vim.api.nvim_get_current_line()
+      local cursor_char = string.sub(line, column + 1, column + 1)
+
+      -- Trigger only on letters, numbers, or underscores
+      if cursor_char:match("[%w_]") then
+        local params = vim.lsp.util.make_position_params()
+        vim.lsp.buf_request(0, "textDocument/hover", params, function(_, result, ctx, config)
+          -- Only open the window if the LSP actually returned documentation
+          if result and result.contents then
+            vim.lsp.handlers.hover(_, result, ctx, config)
+          end
+        end)
+      end
+    end))
+  end,
+})

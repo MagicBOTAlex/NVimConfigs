@@ -34,6 +34,7 @@ return {
     "neovim/nvim-lspconfig",
     -- merge into LazyVim’s default LSP opts
     opts = {
+      inlay_hints = { enabled = true },
       servers = {
         -- your existing tailwindcss setup
         tailwindcss = {
@@ -116,5 +117,4 @@ return {
         severity = vim.diagnostic.severity.ERROR,
       },
     },
-  }
-}
+  }}
