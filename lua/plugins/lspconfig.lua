@@ -81,11 +81,11 @@ return {
             "clangd",
             "--background-index",
             "--clang-tidy",
-            -- This is the most aggressive whitelist. 
+            -- This is the most aggressive whitelist.
             -- It tells clangd: "If the compiler is in the JSON, I trust it."
-            "--query-driver=**,/nix/store/*/bin/clang,/nix/store/*/bin/gcc", 
+            "--query-driver=**,/nix/store/*/bin/clang,/nix/store/*/bin/gcc",
             -- Optional: prevents "unsupported target" noise
-            "--fallback-style=Google", 
+            "--fallback-style=Google",
           },
           root_dir = function(fname)
             return require("lspconfig.util").root_pattern("compile_commands.json", "platformio.ini", ".git")(fname)
@@ -117,4 +117,4 @@ return {
         severity = vim.diagnostic.severity.ERROR,
       },
     },
-  }}
+  } }

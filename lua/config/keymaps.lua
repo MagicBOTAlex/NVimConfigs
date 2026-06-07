@@ -2,7 +2,7 @@
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
-map("n", "<M-Left>", "<C-o>", opts)  -- Alt + Left = Jump back
+map("n", "<M-Left>", "<C-o>", opts) -- Alt + Left = Jump back
 map("n", "<M-Right>", "<C-i>", opts) -- Alt + Right = Jump forward
 
 -- Make not copy by default
@@ -18,6 +18,18 @@ map("n", "c", '"_c', opts)
 map("n", "D", '"_D', opts)
 map("n", "C", '"_C', opts)
 
+-- Handle ctrl + V from wezterm to replace without copying
+local paste_id = vim.paste
+vim.paste = function(lines, phase)
+  local mode = vim.api.nvim_get_mode().mode
+
+  if mode == "v" or mode == "V" or mode == "\22" then
+    vim.cmd([[normal! "_c]])
+  end
+
+  return paste_id(lines, phase)
+end
+
 map("v", "d", '"_d', opts)
 map("v", "c", '"_c', opts)
 map("v", "D", '"_D', opts)
@@ -27,14 +39,13 @@ map("v", "xx", '"+dd', opts)
 map("n", "xx", '"+dd', opts)
 
 -- Normal mode
-vim.keymap.set('n', 'y', '"+y', opts)
-vim.keymap.set('n', 'yy', '"+yy', opts)
-vim.keymap.set('n', 'Y', '"+Y', opts)
+vim.keymap.set("n", "y", '"+y', opts)
+vim.keymap.set("n", "yy", '"+yy', opts)
+vim.keymap.set("n", "Y", '"+Y', opts)
 
 -- Visual/selection mode
-vim.keymap.set('v', 'y', '"+y', opts)
-vim.keymap.set('x', 'y', '"+y', opts)
-
+vim.keymap.set("v", "y", '"+y', opts)
+vim.keymap.set("x", "y", '"+y', opts)
 
 -- Change buffers from 0-9 to 1-9 i think
 local function goto_buffer(index)
@@ -154,8 +165,8 @@ end, { desc = "Shorter window" })
 -- directory Neovim was opened from (or has as its current dir).
 
 vim.keymap.set(
-  "n",                  -- mode: normal
-  "<leader>gp",         -- key sequence
+  "n", -- mode: normal
+  "<leader>gp", -- key sequence
   ":!git pull<CR><CR>", -- command to run
   { silent = true, desc = "Git pull (cwd)" }
 )
@@ -280,7 +291,6 @@ end, { desc = "Toggle Warnings" })
 vim.keymap.set("n", "<leader>cT", function()
   Snacks.terminal(nil, { cwd = vim.fn.expand("%:p:h") })
 end, { desc = "Terminal (Current File Dir)" })
-
 
 -- -- show function signatures
 -- local hover_timer = vim.loop.new_timer()
