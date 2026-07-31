@@ -1,0 +1,6 @@
+-- vim.filetype.add({
+--   extension = {
+--     ino = "cpp",
+--     pde = "cpp",
+--   },
+-- })

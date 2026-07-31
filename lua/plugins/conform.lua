@@ -6,12 +6,16 @@ return {
         tex = { "latexindent" },
         plaintex = { "latexindent" },
         bib = { "latexindent" },
+        cs = { "csharpier" },
       },
       formatters = {
         latexindent = {
           -- Instruct latexindent to clean up log files automatically and run silently
           prepend_args = { "-c", "build/", "-m" },
         },
+        csharpier = {
+          command = "csharpier",
+        }
       },
     },
   },

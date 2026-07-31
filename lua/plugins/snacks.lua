@@ -26,7 +26,20 @@ return {
             },
           },
         },
-        hidden = false,
+        hidden = true,
+exclude = {
+        "*.uid",
+        "*.tscn",
+      },
+      -- Boost priority for .cs files
+      transform = function(item)
+        if item.file and item.file:match("%.cs$") then
+          -- Higher score means it bubbles to the top of the fuzzy match list
+          item.score = (item.score or 1) + 100
+        end
+        return item
+      -- Using a separate matcher logic ensure it still respects typed fuzzy matching
+      end,
       },
       notifier = {
         enabled = true,
