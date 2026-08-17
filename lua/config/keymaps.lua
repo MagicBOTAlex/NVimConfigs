@@ -320,8 +320,8 @@ end, { desc = "Terminal (Current File Dir)" })
 local map = vim.keymap.set
 
 -- Delete the old LazyVim defaults first to avoid conflicts
-vim.keymap.del("n", "<leader>s")
-vim.keymap.del("n", "<leader>S")
+pcall(vim.keymap.del, "n", "<leader>s")
+pcall(vim.keymap.del, "n", "<leader>S")
 
 -- Set your new swapped keymaps
 map("n", "<leader>s", "<cmd>Telescope lsp_workspace_symbols<cr>", { desc = "Workspace Symbols" })

@@ -11,7 +11,7 @@ return {
         "html",
         "css",
         "svelte",
-        "c_sharp"
+        "c_sharp",
       },
       highlight = {
         enable = true,
@@ -42,8 +42,7 @@ return {
           },
         },
 
-        svelte = {
-        },
+        svelte = {},
 
         -- omnisharp = {
         --   -- Explicitly tell lspconfig to use the dotnet-driven assembly runner
@@ -93,7 +92,6 @@ return {
             return require("lspconfig.util").root_pattern("compile_commands.json", "platformio.ini", ".git")(fname)
           end,
         },
-
       },
       setup = {
         svelte = function(_, opts)
@@ -119,12 +117,11 @@ return {
     "seblyng/roslyn.nvim",
     ft = "cs",
     opts = {
-      config = {
-      },
+      config = {},
     },
   },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     event = "UIEnter",
     dependencies = {
       "WhoIsSethDaniel/mason-tool-installer.nvim",

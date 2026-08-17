@@ -1,15 +1,11 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  build = ":TSUpdate",
-  dependencies = { "nvim-treesitter/playground" },
-  config = function()
-    -- 1) First, load your colorscheme (if you do it here).
-    --    If you do it elsewhere (e.g. in init.lua), just be sure
-    --    this next part runs _after_ that.
-    -- vim.cmd("colorscheme tokyonight")  -- for example
-
-    -- 2) Set up Treesitter
-    require("nvim-treesitter.configs").setup({
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
+    opts = {
       ensure_installed = {
         "lua",
         "javascript",
@@ -23,39 +19,55 @@ return {
         "nix",
         "python",
         "go",
+        "c",
+        "vim",
+        "vimdoc",
+        "query",
       },
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-        custom_captures = {
-          ["custom.component"] = "TSCustomComponent",
-        },
-      },
-      textobjects = {
-        select = {
-          enable = true,
-          -- Automatically jump forward to textobj, no need to press "enter"
-          lookahead = true,
-          keymaps = {
-            -- these two lines set up:
-            -- "af" = around-function, "if" = inner-function
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            -- You can also add other mappings if you want (methods, classes, etc.)
-            ["ac"] = "@class.outer",
-            ["ic"] = "@class.inner",
-          },
-        },
-      },
-      playground = { enable = true },
-    })
+    },
+    config = function(_, opts)
+      -- 1. Install / track parsers
+      local ts = require("nvim-treesitter")
+      if type(ts.install) == "function" then
+        ts.install(opts.ensure_installed)
+      elseif type(ts.setup) == "function" then
+        ts.setup(opts)
+      end
 
-    -- 3) _After_ the above, define your custom highlight group in orange:
-    --    we set both GUI and terminal colors
-    vim.api.nvim_set_hl(0, "TSCustomComponent", {
-      fg = "#FFA500",
-      ctermfg = 214,
-      gui = nil,
-    })
-  end,
+      -- 2. Enable native Treesitter syntax highlighting on buffer load
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("TreesitterAutoStart", { clear = true }),
+        callback = function(args)
+          -- Start treesitter highlighter safely if a parser exists
+          pcall(vim.treesitter.start, args.buf)
+        end,
+      })
+
+      -- 3. Configure textobjects
+      local ok_textobjects, textobjects = pcall(require, "nvim-treesitter-textobjects")
+      if ok_textobjects and textobjects.setup then
+        textobjects.setup({
+          select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+              ["af"] = "@function.outer",
+              ["if"] = "@function.inner",
+              ["ac"] = "@class.outer",
+              ["ic"] = "@class.inner",
+            },
+          },
+        })
+      end
+
+      -- 4. Custom highlight capture group:
+      -- Modern Treesitter maps capture '@custom.component' directly to hl group '@custom.component'
+      vim.api.nvim_set_hl(0, "@custom.component", {
+        fg = "#FFA500",
+        ctermfg = 214,
+      })
+      -- Retain legacy name link for backward compatibility
+      vim.api.nvim_set_hl(0, "TSCustomComponent", { link = "@custom.component" })
+    end,
+  },
 }
