@@ -85,12 +85,18 @@ return {
             "clangd",
             "--background-index",
             "--clang-tidy",
-            "--query-driver=**,/nix/store/*/bin/clang,/nix/store/*/bin/gcc",
+            "--query-driver=**,/nix/store/*/bin/clang*,/nix/store/*/bin/gcc*",
             "--fallback-style=Google",
           },
           root_dir = function(fname)
-            return require("lspconfig.util").root_pattern("compile_commands.json", "platformio.ini", ".git")(fname)
+            local util = require("lspconfig.util")
+            return util.root_pattern("compile_commands.json", "compile_flags.txt", "platformio.ini", ".clangd", ".git")(
+              fname
+            ) or vim.fs.dirname(fname) or vim.uv.cwd()
           end,
+          capabilities = {
+            offsetEncoding = { "utf-16" },
+          },
         },
       },
       setup = {
@@ -98,6 +104,10 @@ return {
           require("lspconfig").svelte.setup(opts)
           vim.g.vim_svelte_plugin_use_typescript = 1
           return true
+        end,
+        clangd = function(_, opts)
+          require("lspconfig").clangd.setup(opts)
+          return true -- Prevents LazyVim default handler from double-running
         end,
       },
     },
