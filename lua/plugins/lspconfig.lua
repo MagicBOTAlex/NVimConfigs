@@ -85,7 +85,7 @@ return {
             "clangd",
             "--background-index",
             "--clang-tidy",
-            "--query-driver=**,/nix/store/*/bin/clang*,/nix/store/*/bin/gcc*",
+            "--query-driver=**/*gcc*,**/*g++*,**/*clang*,*xtensa*",
             "--fallback-style=Google",
           },
           root_dir = function(fname)
